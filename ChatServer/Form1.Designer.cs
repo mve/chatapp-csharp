@@ -28,12 +28,216 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.serverSettingsBox = new System.Windows.Forms.GroupBox();
+            this.btnStartStopServer = new System.Windows.Forms.Button();
+            this.txtBufferSize = new System.Windows.Forms.TextBox();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.txtServerPort = new System.Windows.Forms.TextBox();
+            this.portLabel = new System.Windows.Forms.Label();
+            this.txtServerName = new System.Windows.Forms.TextBox();
+            this.bufferSizeLabel = new System.Windows.Forms.Label();
+            this.clientsBox = new System.Windows.Forms.GroupBox();
+            this.clientsList = new System.Windows.Forms.ListBox();
+            this.sendMessageBox = new System.Windows.Forms.GroupBox();
+            this.btnSendMessage = new System.Windows.Forms.Button();
+            this.messageLabel = new System.Windows.Forms.Label();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.chatsBox = new System.Windows.Forms.GroupBox();
+            this.chatsList = new System.Windows.Forms.ListBox();
+            this.serverSettingsBox.SuspendLayout();
+            this.clientsBox.SuspendLayout();
+            this.sendMessageBox.SuspendLayout();
+            this.chatsBox.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // serverSettingsBox
+            // 
+            this.serverSettingsBox.Controls.Add(this.btnStartStopServer);
+            this.serverSettingsBox.Controls.Add(this.txtBufferSize);
+            this.serverSettingsBox.Controls.Add(this.nameLabel);
+            this.serverSettingsBox.Controls.Add(this.txtServerPort);
+            this.serverSettingsBox.Controls.Add(this.portLabel);
+            this.serverSettingsBox.Controls.Add(this.txtServerName);
+            this.serverSettingsBox.Controls.Add(this.bufferSizeLabel);
+            this.serverSettingsBox.Location = new System.Drawing.Point(12, 12);
+            this.serverSettingsBox.Name = "serverSettingsBox";
+            this.serverSettingsBox.Size = new System.Drawing.Size(326, 195);
+            this.serverSettingsBox.TabIndex = 0;
+            this.serverSettingsBox.TabStop = false;
+            this.serverSettingsBox.Text = "Server Settings";
+            // 
+            // btnStartStopServer
+            // 
+            this.btnStartStopServer.Location = new System.Drawing.Point(6, 152);
+            this.btnStartStopServer.Name = "btnStartStopServer";
+            this.btnStartStopServer.Size = new System.Drawing.Size(314, 37);
+            this.btnStartStopServer.TabIndex = 1;
+            this.btnStartStopServer.Text = "Start";
+            this.btnStartStopServer.UseVisualStyleBackColor = true;
+            this.btnStartStopServer.Click += new System.EventHandler(this.btnStartStopServer_Click);
+            // 
+            // txtBufferSize
+            // 
+            this.txtBufferSize.Location = new System.Drawing.Point(74, 113);
+            this.txtBufferSize.Name = "txtBufferSize";
+            this.txtBufferSize.Size = new System.Drawing.Size(246, 23);
+            this.txtBufferSize.TabIndex = 6;
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(6, 37);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(39, 15);
+            this.nameLabel.TabIndex = 1;
+            this.nameLabel.Text = "Name";
+            // 
+            // txtServerPort
+            // 
+            this.txtServerPort.Location = new System.Drawing.Point(74, 73);
+            this.txtServerPort.Name = "txtServerPort";
+            this.txtServerPort.Size = new System.Drawing.Size(246, 23);
+            this.txtServerPort.TabIndex = 5;
+            // 
+            // portLabel
+            // 
+            this.portLabel.AutoSize = true;
+            this.portLabel.Location = new System.Drawing.Point(6, 76);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(29, 15);
+            this.portLabel.TabIndex = 2;
+            this.portLabel.Text = "Port";
+            // 
+            // txtServerName
+            // 
+            this.txtServerName.Location = new System.Drawing.Point(74, 34);
+            this.txtServerName.Name = "txtServerName";
+            this.txtServerName.Size = new System.Drawing.Size(246, 23);
+            this.txtServerName.TabIndex = 4;
+            // 
+            // bufferSizeLabel
+            // 
+            this.bufferSizeLabel.AutoSize = true;
+            this.bufferSizeLabel.Location = new System.Drawing.Point(6, 116);
+            this.bufferSizeLabel.Name = "bufferSizeLabel";
+            this.bufferSizeLabel.Size = new System.Drawing.Size(62, 15);
+            this.bufferSizeLabel.TabIndex = 3;
+            this.bufferSizeLabel.Text = "Buffer Size";
+            // 
+            // clientsBox
+            // 
+            this.clientsBox.Controls.Add(this.clientsList);
+            this.clientsBox.Location = new System.Drawing.Point(12, 225);
+            this.clientsBox.Name = "clientsBox";
+            this.clientsBox.Size = new System.Drawing.Size(326, 234);
+            this.clientsBox.TabIndex = 1;
+            this.clientsBox.TabStop = false;
+            this.clientsBox.Text = "Clients";
+            // 
+            // clientsList
+            // 
+            this.clientsList.FormattingEnabled = true;
+            this.clientsList.ItemHeight = 15;
+            this.clientsList.Location = new System.Drawing.Point(6, 22);
+            this.clientsList.Name = "clientsList";
+            this.clientsList.Size = new System.Drawing.Size(314, 199);
+            this.clientsList.TabIndex = 2;
+            // 
+            // sendMessageBox
+            // 
+            this.sendMessageBox.Controls.Add(this.btnSendMessage);
+            this.sendMessageBox.Controls.Add(this.messageLabel);
+            this.sendMessageBox.Controls.Add(this.txtMessage);
+            this.sendMessageBox.Location = new System.Drawing.Point(12, 476);
+            this.sendMessageBox.Name = "sendMessageBox";
+            this.sendMessageBox.Size = new System.Drawing.Size(326, 136);
+            this.sendMessageBox.TabIndex = 2;
+            this.sendMessageBox.TabStop = false;
+            this.sendMessageBox.Text = "Send Message";
+            // 
+            // btnSendMessage
+            // 
+            this.btnSendMessage.Location = new System.Drawing.Point(6, 84);
+            this.btnSendMessage.Name = "btnSendMessage";
+            this.btnSendMessage.Size = new System.Drawing.Size(314, 39);
+            this.btnSendMessage.TabIndex = 5;
+            this.btnSendMessage.Text = "btnSend";
+            this.btnSendMessage.UseVisualStyleBackColor = true;
+            this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
+            // 
+            // messageLabel
+            // 
+            this.messageLabel.AutoSize = true;
+            this.messageLabel.Location = new System.Drawing.Point(6, 37);
+            this.messageLabel.Name = "messageLabel";
+            this.messageLabel.Size = new System.Drawing.Size(53, 15);
+            this.messageLabel.TabIndex = 3;
+            this.messageLabel.Text = "Message";
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.Location = new System.Drawing.Point(6, 55);
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(314, 23);
+            this.txtMessage.TabIndex = 4;
+            // 
+            // chatsBox
+            // 
+            this.chatsBox.Controls.Add(this.chatsList);
+            this.chatsBox.Location = new System.Drawing.Point(371, 12);
+            this.chatsBox.Name = "chatsBox";
+            this.chatsBox.Size = new System.Drawing.Size(432, 600);
+            this.chatsBox.TabIndex = 3;
+            this.chatsBox.TabStop = false;
+            this.chatsBox.Text = "Chats";
+            // 
+            // chatsList
+            // 
+            this.chatsList.FormattingEnabled = true;
+            this.chatsList.ItemHeight = 15;
+            this.chatsList.Location = new System.Drawing.Point(15, 22);
+            this.chatsList.Name = "chatsList";
+            this.chatsList.Size = new System.Drawing.Size(394, 559);
+            this.chatsList.TabIndex = 0;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(819, 629);
+            this.Controls.Add(this.chatsBox);
+            this.Controls.Add(this.sendMessageBox);
+            this.Controls.Add(this.clientsBox);
+            this.Controls.Add(this.serverSettingsBox);
+            this.Name = "Form1";
+            this.Text = " NOTS Chat Server";
+            this.serverSettingsBox.ResumeLayout(false);
+            this.serverSettingsBox.PerformLayout();
+            this.clientsBox.ResumeLayout(false);
+            this.sendMessageBox.ResumeLayout(false);
+            this.sendMessageBox.PerformLayout();
+            this.chatsBox.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private GroupBox serverSettingsBox;
+        private Button btnStartStopServer;
+        private TextBox txtBufferSize;
+        private Label nameLabel;
+        private TextBox txtServerPort;
+        private Label portLabel;
+        private TextBox txtServerName;
+        private Label bufferSizeLabel;
+        private GroupBox clientsBox;
+        private ListBox clientsList;
+        private GroupBox sendMessageBox;
+        private Button btnSendMessage;
+        private Label messageLabel;
+        private TextBox txtMessage;
+        private GroupBox chatsBox;
+        private ListBox chatsList;
     }
 }

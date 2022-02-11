@@ -91,7 +91,7 @@ namespace ChatApp
         }
 
         // Stap 8:
-        private void btnConnectWithServer_Click(object sender, EventArgs e)
+        private void btnConnect_Click(object sender, EventArgs e)
         {
             AddMessage("Connecting...");
 
@@ -112,6 +112,5 @@ namespace ChatApp
             txtMessage.Clear();
             txtMessage.Focus();
         }
-
     }
 }
