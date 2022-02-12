@@ -35,7 +35,7 @@
             this.chatserverIpLabel = new System.Windows.Forms.Label();
             this.txtServerIp = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
-            this.btnSend = new System.Windows.Forms.Button();
+            this.btnSendMessage = new System.Windows.Forms.Button();
             this.connectToServerBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +76,7 @@
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(172, 28);
             this.btnConnect.TabIndex = 2;
-            this.btnConnect.Text = "btnConnect";
+            this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
@@ -95,7 +95,7 @@
             this.txtServerIp.Name = "txtServerIp";
             this.txtServerIp.Size = new System.Drawing.Size(172, 23);
             this.txtServerIp.TabIndex = 0;
-            this.txtServerIp.Text = "txtServerIp";
+            this.txtServerIp.Text = "localhost";
             // 
             // txtMessage
             // 
@@ -105,21 +105,22 @@
             this.txtMessage.TabIndex = 3;
             this.txtMessage.Text = "txtMessage";
             // 
-            // btnSend
+            // btnSendMessage
             // 
-            this.btnSend.Location = new System.Drawing.Point(458, 335);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 24);
-            this.btnSend.TabIndex = 4;
-            this.btnSend.Text = "btnSend";
-            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSendMessage.Location = new System.Drawing.Point(458, 335);
+            this.btnSendMessage.Name = "btnSendMessage";
+            this.btnSendMessage.Size = new System.Drawing.Size(75, 24);
+            this.btnSendMessage.TabIndex = 4;
+            this.btnSendMessage.Text = "Send";
+            this.btnSendMessage.UseVisualStyleBackColor = true;
+            this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 384);
-            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.btnSendMessage);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.connectToServerBox);
             this.Controls.Add(this.btnListen);
@@ -142,6 +143,6 @@
         private Label chatserverIpLabel;
         private TextBox txtServerIp;
         private TextBox txtMessage;
-        private Button btnSend;
+        private Button btnSendMessage;
     }
 }

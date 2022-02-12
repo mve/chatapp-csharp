@@ -25,12 +25,15 @@ namespace ChatApp
         // Stap 5:
         private void AddMessage(string message)
         {
+            Console.WriteLine("Add message...");
             if (listChat.InvokeRequired)
             {
+                Console.WriteLine("Invoke required");
                 listChat.Invoke(new UpdateDisplayDelegate(UpdateDisplay), new object[] { message });
             }
             else
             {
+                Console.WriteLine("Invoke not required");
                 UpdateDisplay(message);
             }
         }
@@ -57,15 +60,12 @@ namespace ChatApp
         // Stap 7:
         private void ReceiveData()
         {
-            //int bufferSize = 1024;
-            // Stap 11:
-            int bufferSize = 2;
+            int bufferSize = 1024;
             string message = "";
             byte[] buffer = new byte[bufferSize];
 
             networkStream = tcpClient.GetStream();
-            // conform opdracht maar zonder hergebruik:
-            //listChats.Invoke(new UpdateDisplayDelegate(UpdateDisplay), new object[] { "Connected!" });     
+   
             AddMessage("Connected!");
 
             while (true)
