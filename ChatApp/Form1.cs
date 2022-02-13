@@ -3,7 +3,6 @@ namespace ChatApp
     using System;
     using System.Net;
     using System.Net.Sockets;
-    using System.Threading;
     using System.Text;
     using System.Net.NetworkInformation;
 
@@ -13,7 +12,6 @@ namespace ChatApp
         // Stap 3:
         TcpClient tcpClient = new();
         NetworkStream networkStream;
-        Thread thread;
 
         // Stap 4: 
         protected delegate void UpdateDisplayDelegate(string message);
@@ -47,19 +45,18 @@ namespace ChatApp
         // Stap 6:
         private void btnListen_Click(object sender, EventArgs e)
         {
-            TcpListener tcpListener = new TcpListener(IPAddress.Any, 9000);
-            tcpListener.Start();
+            //    TcpListener tcpListener = new TcpListener(IPAddress.Any, 9000);
+            //    tcpListener.Start();
 
-            //listChats.Items.Add("Listening for client.");     // conform opdracht maar zonder hergebruik
-            AddMessage("Listening for client.");
+            //    //listChats.Items.Add("Listening for client.");     // conform opdracht maar zonder hergebruik
+            //    AddMessage("Listening for client.");
 
-            tcpClient = tcpListener.AcceptTcpClient();
-            thread = new Thread(new ThreadStart(ReceiveData));
-            thread.Start();
+            //    tcpClient = tcpListener.AcceptTcpClient();
+            //    thread = new Thread(new ThreadStart(ReceiveData));
+            //    thread.Start();
         }
 
-        // Stap 7:
-        private void ReceiveData()
+        private async Task ReceiveData()
         {
             int bufferSize = 1024;
             string message = "";
@@ -74,7 +71,7 @@ namespace ChatApp
 
                 while (true)
                 {
-                    int readBytes = networkStream.Read(buffer, 0, bufferSize);
+                    int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
                     message = Encoding.ASCII.GetString(buffer, 0, readBytes);
 
                     if (message == "bye")
@@ -85,7 +82,7 @@ namespace ChatApp
 
                 // Verstuur een reactie naar de client (afsluitend bericht)
                 buffer = Encoding.ASCII.GetBytes("bye");
-                networkStream.Write(buffer, 0, buffer.Length);
+                await networkStream.WriteAsync(buffer, 0, buffer.Length);
 
                 // cleanup:
                 networkStream.Close();
@@ -95,6 +92,7 @@ namespace ChatApp
             catch (Exception ex)
             {
                 AddMessage(ex.Message);
+                networkStream.Close();
             }
 
             AddMessage("Connection closed");
@@ -107,11 +105,9 @@ namespace ChatApp
 
             try
             {
-                // tcpClient = new TcpClient();
+                tcpClient = new TcpClient();
                 await tcpClient.ConnectAsync(txtServerIp.Text, 9000);
-
-                thread = new Thread(new ThreadStart(ReceiveData));
-                thread.Start();
+                await ReceiveData();
             }
             catch (Exception ex)
             {
@@ -122,38 +118,29 @@ namespace ChatApp
         }
 
         // Stap 9:
-        private void btnSendMessage_Click(object sender, EventArgs e)
+        private async void btnSendMessage_Click(object sender, EventArgs e)
         {
 
-            // IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
-            // TcpConnectionInformation[] tcpConnections = ipProperties.GetActiveTcpConnections().Where(x => x.LocalEndPoint.Equals(tcpClient.Client.LocalEndPoint) && x.RemoteEndPoint.Equals(tcpClient.Client.RemoteEndPoint)).ToArray();
+            if (networkStream == null)
+            {
+                AddMessage("Niet verbonden...");
+                return;
+            }
 
-            //if (tcpConnections != null && tcpConnections.Length > 0)
-            //{
-                //TcpState stateOfConnection = tcpConnections.First().State;
-                //if (stateOfConnection == TcpState.Established)
-                //{
-                    // Connection is OK
-                    string message = txtMessage.Text;
+            if (!networkStream.CanWrite)
+            {
+                AddMessage("Niet verbonden...");
+                return;
+            }
 
-                    byte[] buffer = Encoding.ASCII.GetBytes(message);
-                    networkStream.Write(buffer, 0, buffer.Length);
+            string message = txtMessage.Text;
 
-                    AddMessage(message);
-                    txtMessage.Clear();
-                    txtMessage.Focus();
-                //}
-                //else
-                //{
-                    // No active tcp Connection to hostName:port
-                    //AddMessage("Niet verbonden...");
-                //}
+            byte[] buffer = Encoding.ASCII.GetBytes(message);
+            await networkStream.WriteAsync(buffer, 0, buffer.Length);
 
-            //}
-            //else {
-                // No active tcp Connection to hostName:port
-                //AddMessage("Niet verbonden...");
-            //}
+            AddMessage(message);
+            txtMessage.Clear();
+            txtMessage.Focus();
 
         }
     }
