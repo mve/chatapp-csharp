@@ -9,11 +9,12 @@ namespace ChatApp
     public partial class Form1 : Form
     {
 
-        // Stap 3:
         TcpClient tcpClient = new();
         NetworkStream networkStream;
+        int bufferSize = 1024;
+        int port = 9000;
+        string host = "localhost";
 
-        // Stap 4: 
         protected delegate void UpdateDisplayDelegate(string message);
 
         public Form1()
@@ -24,15 +25,14 @@ namespace ChatApp
         // Stap 5:
         private void AddMessage(string message)
         {
-            Console.WriteLine("Add message...");
             if (listChat.InvokeRequired)
             {
-                Console.WriteLine("Invoke required");
+                // Invoke required
                 listChat.Invoke(new UpdateDisplayDelegate(UpdateDisplay), new object[] { message });
             }
             else
             {
-                Console.WriteLine("Invoke not required");
+                // Invoke not required
                 UpdateDisplay(message);
             }
         }
@@ -42,23 +42,8 @@ namespace ChatApp
             listChat.Items.Add(message);
         }
 
-        // Stap 6:
-        private void btnListen_Click(object sender, EventArgs e)
-        {
-            //    TcpListener tcpListener = new TcpListener(IPAddress.Any, 9000);
-            //    tcpListener.Start();
-
-            //    //listChats.Items.Add("Listening for client.");     // conform opdracht maar zonder hergebruik
-            //    AddMessage("Listening for client.");
-
-            //    tcpClient = tcpListener.AcceptTcpClient();
-            //    thread = new Thread(new ThreadStart(ReceiveData));
-            //    thread.Start();
-        }
-
         private async Task ReceiveData()
         {
-            int bufferSize = 1024;
             string message = "";
             byte[] buffer = new byte[bufferSize];
 
@@ -74,10 +59,18 @@ namespace ChatApp
                     int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
                     message = Encoding.ASCII.GetString(buffer, 0, readBytes);
 
-                    if (message == "bye")
-                        break;
+                    while (networkStream.DataAvailable)
+                    {
+                        readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
+                        message += Encoding.ASCII.GetString(buffer, 0, readBytes);
+                    }
+
+                    //if (message == "bye")
+                    //    break;
 
                     AddMessage(message);
+                    // Clear message.
+                    message = "";
                 }
 
                 // Verstuur een reactie naar de client (afsluitend bericht)
@@ -103,10 +96,14 @@ namespace ChatApp
         {
             AddMessage("Connecting...");
 
+            setBufferSize();
+            setPort();
+            setHost();
+
             try
             {
                 tcpClient = new TcpClient();
-                await tcpClient.ConnectAsync(txtServerIp.Text, 9000);
+                await tcpClient.ConnectAsync(host, port);
                 await ReceiveData();
             }
             catch (Exception ex)
@@ -115,6 +112,39 @@ namespace ChatApp
             }
 
 
+        }
+
+        private void setBufferSize()
+        {
+            bool result = int.TryParse(txtBufferSize.Text, out bufferSize);
+            if (result)
+            {
+                AddMessage("Set buffer size to " + bufferSize + ".");
+            }
+            else
+            {
+                AddMessage("Incorrect value for buffer size. Set to 1024.");
+            }
+
+        }
+
+        private void setPort()
+        {
+            bool result = int.TryParse(txtPort.Text, out port);
+            if (result)
+            {
+                AddMessage("Set port size to " + port + ".");
+            }
+            else
+            {
+                AddMessage("Incorrect value for buffer size. Set to 9000.");
+            }
+
+        }
+
+        private void setHost()
+        {
+            host = txtServerIp.Text;
         }
 
         // Stap 9:
@@ -134,6 +164,20 @@ namespace ChatApp
             }
 
             string message = txtMessage.Text;
+
+            if (message == "bye") {
+
+                // cleanup:
+                networkStream.Close();
+                tcpClient.Close();
+
+                // send ending message.
+                AddMessage("Closing connection...");
+                txtMessage.Clear();
+                txtMessage.Focus();
+
+                return;
+            }
 
             byte[] buffer = Encoding.ASCII.GetBytes(message);
             await networkStream.WriteAsync(buffer, 0, buffer.Length);

@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             this.listChat = new System.Windows.Forms.ListBox();
-            this.btnListen = new System.Windows.Forms.Button();
             this.connectToServerBox = new System.Windows.Forms.GroupBox();
+            this.txtPort = new System.Windows.Forms.TextBox();
+            this.portLabel = new System.Windows.Forms.Label();
+            this.txtBufferSize = new System.Windows.Forms.TextBox();
+            this.bufferSizeLabel = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
             this.chatserverIpLabel = new System.Windows.Forms.Label();
             this.txtServerIp = new System.Windows.Forms.TextBox();
@@ -45,36 +48,66 @@
             this.listChat.ItemHeight = 15;
             this.listChat.Location = new System.Drawing.Point(12, 12);
             this.listChat.Name = "listChat";
-            this.listChat.Size = new System.Drawing.Size(521, 304);
+            this.listChat.Size = new System.Drawing.Size(602, 259);
             this.listChat.TabIndex = 0;
-            // 
-            // btnListen
-            // 
-            this.btnListen.Location = new System.Drawing.Point(539, 12);
-            this.btnListen.Name = "btnListen";
-            this.btnListen.Size = new System.Drawing.Size(191, 57);
-            this.btnListen.TabIndex = 1;
-            this.btnListen.Text = "btnListen";
-            this.btnListen.UseVisualStyleBackColor = true;
-            this.btnListen.Click += new System.EventHandler(this.btnListen_Click);
             // 
             // connectToServerBox
             // 
+            this.connectToServerBox.Controls.Add(this.txtPort);
+            this.connectToServerBox.Controls.Add(this.portLabel);
+            this.connectToServerBox.Controls.Add(this.txtBufferSize);
+            this.connectToServerBox.Controls.Add(this.bufferSizeLabel);
             this.connectToServerBox.Controls.Add(this.btnConnect);
             this.connectToServerBox.Controls.Add(this.chatserverIpLabel);
             this.connectToServerBox.Controls.Add(this.txtServerIp);
-            this.connectToServerBox.Location = new System.Drawing.Point(539, 86);
+            this.connectToServerBox.Location = new System.Drawing.Point(620, 12);
             this.connectToServerBox.Name = "connectToServerBox";
-            this.connectToServerBox.Size = new System.Drawing.Size(191, 142);
+            this.connectToServerBox.Size = new System.Drawing.Size(191, 220);
             this.connectToServerBox.TabIndex = 2;
             this.connectToServerBox.TabStop = false;
             this.connectToServerBox.Text = "Connect to Server:";
             // 
+            // txtPort
+            // 
+            this.txtPort.Location = new System.Drawing.Point(6, 87);
+            this.txtPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(179, 23);
+            this.txtPort.TabIndex = 6;
+            this.txtPort.Text = "9000";
+            // 
+            // portLabel
+            // 
+            this.portLabel.AutoSize = true;
+            this.portLabel.Location = new System.Drawing.Point(6, 70);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(32, 15);
+            this.portLabel.TabIndex = 5;
+            this.portLabel.Text = "Port:";
+            // 
+            // txtBufferSize
+            // 
+            this.txtBufferSize.Location = new System.Drawing.Point(5, 142);
+            this.txtBufferSize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtBufferSize.Name = "txtBufferSize";
+            this.txtBufferSize.Size = new System.Drawing.Size(180, 23);
+            this.txtBufferSize.TabIndex = 4;
+            this.txtBufferSize.Text = "1024";
+            // 
+            // bufferSizeLabel
+            // 
+            this.bufferSizeLabel.AutoSize = true;
+            this.bufferSizeLabel.Location = new System.Drawing.Point(5, 125);
+            this.bufferSizeLabel.Name = "bufferSizeLabel";
+            this.bufferSizeLabel.Size = new System.Drawing.Size(65, 15);
+            this.bufferSizeLabel.TabIndex = 3;
+            this.bufferSizeLabel.Text = "Buffer Size:";
+            // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(6, 96);
+            this.btnConnect.Location = new System.Drawing.Point(-1, 186);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(172, 28);
+            this.btnConnect.Size = new System.Drawing.Size(186, 28);
             this.btnConnect.TabIndex = 2;
             this.btnConnect.Text = "Connect";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -83,7 +116,7 @@
             // chatserverIpLabel
             // 
             this.chatserverIpLabel.AutoSize = true;
-            this.chatserverIpLabel.Location = new System.Drawing.Point(6, 40);
+            this.chatserverIpLabel.Location = new System.Drawing.Point(5, 20);
             this.chatserverIpLabel.Name = "chatserverIpLabel";
             this.chatserverIpLabel.Size = new System.Drawing.Size(79, 15);
             this.chatserverIpLabel.TabIndex = 1;
@@ -91,25 +124,24 @@
             // 
             // txtServerIp
             // 
-            this.txtServerIp.Location = new System.Drawing.Point(6, 58);
+            this.txtServerIp.Location = new System.Drawing.Point(6, 38);
             this.txtServerIp.Name = "txtServerIp";
-            this.txtServerIp.Size = new System.Drawing.Size(172, 23);
+            this.txtServerIp.Size = new System.Drawing.Size(180, 23);
             this.txtServerIp.TabIndex = 0;
             this.txtServerIp.Text = "localhost";
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(12, 336);
+            this.txtMessage.Location = new System.Drawing.Point(12, 276);
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(440, 23);
+            this.txtMessage.Size = new System.Drawing.Size(521, 23);
             this.txtMessage.TabIndex = 3;
-            this.txtMessage.Text = "txtMessage";
             // 
             // btnSendMessage
             // 
-            this.btnSendMessage.Location = new System.Drawing.Point(458, 335);
+            this.btnSendMessage.Location = new System.Drawing.Point(539, 276);
             this.btnSendMessage.Name = "btnSendMessage";
-            this.btnSendMessage.Size = new System.Drawing.Size(75, 24);
+            this.btnSendMessage.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessage.TabIndex = 4;
             this.btnSendMessage.Text = "Send";
             this.btnSendMessage.UseVisualStyleBackColor = true;
@@ -119,11 +151,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 384);
+            this.ClientSize = new System.Drawing.Size(821, 309);
             this.Controls.Add(this.btnSendMessage);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.connectToServerBox);
-            this.Controls.Add(this.btnListen);
             this.Controls.Add(this.listChat);
             this.Name = "Form1";
             this.Text = "NOTS Chat Client";
@@ -137,12 +168,15 @@
         #endregion
 
         private ListBox listChat;
-        private Button btnListen;
         private GroupBox connectToServerBox;
         private Button btnConnect;
         private Label chatserverIpLabel;
         private TextBox txtServerIp;
         private TextBox txtMessage;
         private Button btnSendMessage;
+        private TextBox txtBufferSize;
+        private Label bufferSizeLabel;
+        private TextBox txtPort;
+        private Label portLabel;
     }
 }

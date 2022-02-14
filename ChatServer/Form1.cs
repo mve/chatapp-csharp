@@ -6,9 +6,9 @@ namespace ChatServer
 {
     public partial class Form1 : Form
     {
-        // Init tcp client and network stream.
         List<TcpClient> tcpClients = new();
-        // NetworkStream networkStream;
+        int bufferSize = 1024;
+        int port = 9000;
 
         public Form1()
         {
@@ -22,9 +22,8 @@ namespace ChatServer
         }
 
 
-        private void ReceiveData(TcpClient currentClient)
+        private async void ReceiveData(TcpClient currentClient)
         {
-            int bufferSize = 1024;
             string message = "";
             byte[] buffer = new byte[bufferSize];
 
@@ -32,27 +31,42 @@ namespace ChatServer
 
             AddMessage("Connected!");
 
-
-            while (true)
+            try
             {
-                int readBytes = networkStream.Read(buffer, 0, bufferSize);
-                message = Encoding.ASCII.GetString(buffer, 0, readBytes);
+                while (true)
+                {
+                    int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
+                    message += Encoding.ASCII.GetString(buffer, 0, readBytes);
 
-                if (message == "bye")
-                    break;
+                    while (networkStream.DataAvailable) {
+                        readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
+                        message += Encoding.ASCII.GetString(buffer, 0, readBytes);
+                    }
 
-                AddMessage(message);
-                sendMessageToClients(message, currentClient);
+                    if (message == "")
+                        break;
+
+                    AddMessage(message);
+                    sendMessageToClients(message, currentClient);
+
+                    // Clear message.
+                    message = "";
+                }
+
+                // Verstuur een reactie naar de client (afsluitend bericht)
+                buffer = Encoding.ASCII.GetBytes("bye");
+                networkStream.Write(buffer, 0, buffer.Length);
+
+                // cleanup:
+                // networkStream.Close();
+                currentClient.Close();
+            }
+            catch (Exception ex)
+            {
+                AddMessage(ex.Message);
             }
 
-            // Verstuur een reactie naar de client (afsluitend bericht)
-            buffer = Encoding.ASCII.GetBytes("bye");
-            networkStream.Write(buffer, 0, buffer.Length);
-
-            // cleanup:
-            networkStream.Close();
-            currentClient.Close();
-
+            updateClientsList();
             AddMessage("Connection closed");
         }
 
@@ -61,9 +75,41 @@ namespace ChatServer
             StartServer();
         }
 
+        private void setBufferSize() {
+
+            bool result = int.TryParse(txtBufferSize.Text, out bufferSize);
+            if (result)
+            {
+                AddMessage("Set buffer size to " + bufferSize + ".");
+            }
+            else
+            {
+                AddMessage("Incorrect value for buffer size. Set to 1024.");
+            }
+
+        }
+
+        private void setPort()
+        {
+
+            bool result = int.TryParse(txtServerPort.Text, out port);
+            if (result)
+            {
+                AddMessage("Set port to " + port + ".");
+            }
+            else
+            {
+                AddMessage("Incorrect value for buffer size. Set to 9000.");
+            }
+
+        }
+
         async Task StartServer()
-        { 
-            TcpListener tcpListener = new TcpListener(IPAddress.Any, 9000);
+        {
+            setBufferSize();
+            setPort();
+
+            TcpListener tcpListener = new TcpListener(IPAddress.Any, port);
 
             // TODO Deze mag maar 1 keer worden uitgevoerd.
             tcpListener.Start();
@@ -82,10 +128,26 @@ namespace ChatServer
 
         private void updateClientsList()
         {
-            clientsList.Items.Clear();
+            if (clientsList.InvokeRequired)
+            {
+                this.BeginInvoke(() => clientsList.Items.Clear());
+                this.BeginInvoke(() =>
+                {
+                    for (var i = 1; tcpClients.Count >= i; i++)
+                    {
+                        clientsList.Items.Add("Client " + i);
+                    }
+                });
 
-            for (var i = 1; tcpClients.Count >= i; i++) {
-                clientsList.Items.Add("Client " + i);
+
+            }
+            else
+            {
+                clientsList.Items.Clear();
+                for (var i = 1; tcpClients.Count >= i; i++)
+                {
+                    clientsList.Items.Add("Client " + i);
+                }
             }
 
         }
@@ -109,9 +171,9 @@ namespace ChatServer
             foreach (TcpClient tcpClient in tcpClients)
             {
 
-                if (tcpClient == clientException)
+                if (tcpClient == clientException || tcpClient.Connected == false)
                 {
-                    // Dont send back to sender...
+                    // Dont send to sender or not connected client.
                     continue;
                 }
                 

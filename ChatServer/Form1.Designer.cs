@@ -61,16 +61,16 @@
             this.serverSettingsBox.Controls.Add(this.bufferSizeLabel);
             this.serverSettingsBox.Location = new System.Drawing.Point(12, 12);
             this.serverSettingsBox.Name = "serverSettingsBox";
-            this.serverSettingsBox.Size = new System.Drawing.Size(326, 195);
+            this.serverSettingsBox.Size = new System.Drawing.Size(243, 242);
             this.serverSettingsBox.TabIndex = 0;
             this.serverSettingsBox.TabStop = false;
             this.serverSettingsBox.Text = "Server Settings";
             // 
             // btnStartStopServer
             // 
-            this.btnStartStopServer.Location = new System.Drawing.Point(6, 152);
+            this.btnStartStopServer.Location = new System.Drawing.Point(5, 199);
             this.btnStartStopServer.Name = "btnStartStopServer";
-            this.btnStartStopServer.Size = new System.Drawing.Size(314, 37);
+            this.btnStartStopServer.Size = new System.Drawing.Size(227, 37);
             this.btnStartStopServer.TabIndex = 1;
             this.btnStartStopServer.Text = "Start";
             this.btnStartStopServer.UseVisualStyleBackColor = true;
@@ -78,15 +78,16 @@
             // 
             // txtBufferSize
             // 
-            this.txtBufferSize.Location = new System.Drawing.Point(74, 113);
+            this.txtBufferSize.Location = new System.Drawing.Point(5, 153);
             this.txtBufferSize.Name = "txtBufferSize";
-            this.txtBufferSize.Size = new System.Drawing.Size(246, 23);
+            this.txtBufferSize.Size = new System.Drawing.Size(227, 23);
             this.txtBufferSize.TabIndex = 6;
+            this.txtBufferSize.Text = "1024";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(6, 37);
+            this.nameLabel.Location = new System.Drawing.Point(5, 21);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(39, 15);
             this.nameLabel.TabIndex = 1;
@@ -94,15 +95,16 @@
             // 
             // txtServerPort
             // 
-            this.txtServerPort.Location = new System.Drawing.Point(74, 73);
+            this.txtServerPort.Location = new System.Drawing.Point(5, 95);
             this.txtServerPort.Name = "txtServerPort";
-            this.txtServerPort.Size = new System.Drawing.Size(246, 23);
+            this.txtServerPort.Size = new System.Drawing.Size(227, 23);
             this.txtServerPort.TabIndex = 5;
+            this.txtServerPort.Text = "9000";
             // 
             // portLabel
             // 
             this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(6, 76);
+            this.portLabel.Location = new System.Drawing.Point(7, 77);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(29, 15);
             this.portLabel.TabIndex = 2;
@@ -110,15 +112,15 @@
             // 
             // txtServerName
             // 
-            this.txtServerName.Location = new System.Drawing.Point(74, 34);
+            this.txtServerName.Location = new System.Drawing.Point(5, 39);
             this.txtServerName.Name = "txtServerName";
-            this.txtServerName.Size = new System.Drawing.Size(246, 23);
+            this.txtServerName.Size = new System.Drawing.Size(227, 23);
             this.txtServerName.TabIndex = 4;
             // 
             // bufferSizeLabel
             // 
             this.bufferSizeLabel.AutoSize = true;
-            this.bufferSizeLabel.Location = new System.Drawing.Point(6, 116);
+            this.bufferSizeLabel.Location = new System.Drawing.Point(7, 135);
             this.bufferSizeLabel.Name = "bufferSizeLabel";
             this.bufferSizeLabel.Size = new System.Drawing.Size(62, 15);
             this.bufferSizeLabel.TabIndex = 3;
@@ -127,9 +129,9 @@
             // clientsBox
             // 
             this.clientsBox.Controls.Add(this.clientsList);
-            this.clientsBox.Location = new System.Drawing.Point(12, 225);
+            this.clientsBox.Location = new System.Drawing.Point(10, 271);
             this.clientsBox.Name = "clientsBox";
-            this.clientsBox.Size = new System.Drawing.Size(326, 234);
+            this.clientsBox.Size = new System.Drawing.Size(245, 186);
             this.clientsBox.TabIndex = 1;
             this.clientsBox.TabStop = false;
             this.clientsBox.Text = "Clients";
@@ -140,7 +142,7 @@
             this.clientsList.ItemHeight = 15;
             this.clientsList.Location = new System.Drawing.Point(6, 22);
             this.clientsList.Name = "clientsList";
-            this.clientsList.Size = new System.Drawing.Size(314, 199);
+            this.clientsList.Size = new System.Drawing.Size(228, 154);
             this.clientsList.TabIndex = 2;
             // 
             // sendMessageBox
@@ -148,27 +150,27 @@
             this.sendMessageBox.Controls.Add(this.btnSendMessage);
             this.sendMessageBox.Controls.Add(this.messageLabel);
             this.sendMessageBox.Controls.Add(this.txtMessage);
-            this.sendMessageBox.Location = new System.Drawing.Point(12, 476);
+            this.sendMessageBox.Location = new System.Drawing.Point(281, 388);
             this.sendMessageBox.Name = "sendMessageBox";
-            this.sendMessageBox.Size = new System.Drawing.Size(326, 136);
+            this.sendMessageBox.Size = new System.Drawing.Size(528, 68);
             this.sendMessageBox.TabIndex = 2;
             this.sendMessageBox.TabStop = false;
             this.sendMessageBox.Text = "Send Message";
             // 
             // btnSendMessage
             // 
-            this.btnSendMessage.Location = new System.Drawing.Point(6, 84);
+            this.btnSendMessage.Location = new System.Drawing.Point(447, 39);
             this.btnSendMessage.Name = "btnSendMessage";
-            this.btnSendMessage.Size = new System.Drawing.Size(314, 39);
+            this.btnSendMessage.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessage.TabIndex = 5;
-            this.btnSendMessage.Text = "btnSend";
+            this.btnSendMessage.Text = "Send";
             this.btnSendMessage.UseVisualStyleBackColor = true;
             this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
             // 
             // messageLabel
             // 
             this.messageLabel.AutoSize = true;
-            this.messageLabel.Location = new System.Drawing.Point(6, 37);
+            this.messageLabel.Location = new System.Drawing.Point(6, 21);
             this.messageLabel.Name = "messageLabel";
             this.messageLabel.Size = new System.Drawing.Size(53, 15);
             this.messageLabel.TabIndex = 3;
@@ -176,17 +178,17 @@
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(6, 55);
+            this.txtMessage.Location = new System.Drawing.Point(6, 39);
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(314, 23);
+            this.txtMessage.Size = new System.Drawing.Size(436, 23);
             this.txtMessage.TabIndex = 4;
             // 
             // chatsBox
             // 
             this.chatsBox.Controls.Add(this.chatsList);
-            this.chatsBox.Location = new System.Drawing.Point(371, 12);
+            this.chatsBox.Location = new System.Drawing.Point(276, 12);
             this.chatsBox.Name = "chatsBox";
-            this.chatsBox.Size = new System.Drawing.Size(432, 600);
+            this.chatsBox.Size = new System.Drawing.Size(528, 345);
             this.chatsBox.TabIndex = 3;
             this.chatsBox.TabStop = false;
             this.chatsBox.Text = "Chats";
@@ -195,16 +197,16 @@
             // 
             this.chatsList.FormattingEnabled = true;
             this.chatsList.ItemHeight = 15;
-            this.chatsList.Location = new System.Drawing.Point(15, 22);
+            this.chatsList.Location = new System.Drawing.Point(6, 21);
             this.chatsList.Name = "chatsList";
-            this.chatsList.Size = new System.Drawing.Size(394, 559);
+            this.chatsList.Size = new System.Drawing.Size(517, 319);
             this.chatsList.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 629);
+            this.ClientSize = new System.Drawing.Size(819, 466);
             this.Controls.Add(this.chatsBox);
             this.Controls.Add(this.sendMessageBox);
             this.Controls.Add(this.clientsBox);
