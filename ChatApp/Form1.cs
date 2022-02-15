@@ -20,6 +20,7 @@ namespace ChatApp
         public Form1()
         {
             InitializeComponent();
+            btnDisconnect.Visible = false;
         }
 
         // Stap 5:
@@ -49,7 +50,10 @@ namespace ChatApp
 
             networkStream = tcpClient.GetStream();
 
+            btnConnect.Visible = false;
+            btnDisconnect.Visible = true;
             AddMessage("Connected!");
+
 
             try
             {
@@ -65,27 +69,21 @@ namespace ChatApp
                         message += Encoding.ASCII.GetString(buffer, 0, readBytes);
                     }
 
-                    //if (message == "bye")
-                    //    break;
+                    if (message == "")
+                        break;
 
                     AddMessage(message);
                     // Clear message.
                     message = "";
                 }
 
-                // Verstuur een reactie naar de client (afsluitend bericht)
-                buffer = Encoding.ASCII.GetBytes("bye");
-                await networkStream.WriteAsync(buffer, 0, buffer.Length);
-
-                // cleanup:
-                networkStream.Close();
-                tcpClient.Close();
+                disconnectFromServer();
 
             }
             catch (Exception ex)
             {
                 AddMessage(ex.Message);
-                networkStream.Close();
+                disconnectFromServer();
             }
 
             AddMessage("Connection closed");
@@ -165,17 +163,9 @@ namespace ChatApp
 
             string message = txtMessage.Text;
 
-            if (message == "bye") {
-
-                // cleanup:
-                networkStream.Close();
-                tcpClient.Close();
-
-                // send ending message.
-                AddMessage("Closing connection...");
-                txtMessage.Clear();
-                txtMessage.Focus();
-
+            if (message == "bye")
+            {
+                disconnectFromServer();
                 return;
             }
 
@@ -186,6 +176,27 @@ namespace ChatApp
             txtMessage.Clear();
             txtMessage.Focus();
 
+        }
+
+        private void disconnectFromServer()
+        {
+            // cleanup:
+            networkStream.Close();
+            tcpClient.Close();
+
+            // send ending message.
+            AddMessage("Closing connection...");
+            txtMessage.Clear();
+            txtMessage.Focus();
+
+            btnConnect.Visible = true;
+            btnDisconnect.Visible = false;
+
+        }
+
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            disconnectFromServer();
         }
     }
 }

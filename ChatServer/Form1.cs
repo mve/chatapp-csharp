@@ -8,12 +8,14 @@ namespace ChatServer
     public partial class Form1 : Form
     {
         List<TcpClient> tcpClients = new();
+        TcpListener tcpListener;
         int bufferSize = 1024;
         int port = 9000;
 
         public Form1()
         {
             InitializeComponent();
+            btnStop.Visible = false;
         }
 
         // Add chat message.
@@ -109,34 +111,48 @@ namespace ChatServer
 
         async Task StartServer()
         {
+            btnStartStopServer.Visible = false;
+            btnStop.Visible = true;
+
             setBufferSize();
             setPort();
 
             try
             {
-                TcpListener tcpListener = new TcpListener(IPAddress.Any, port);
+                tcpListener = new TcpListener(IPAddress.Any, port);
 
                 // TODO Deze mag maar 1 keer worden uitgevoerd.
                 tcpListener.Start();
 
                 while (true)
                 {
-                    AddMessage("Waiting for a connection...");
-                    TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
-                    tcpClients.Add(tcpClient);
-                    updateClientsList();
+                    try
+                    {
 
-                    Task.Run(() => ReceiveData(tcpClient));
+                        AddMessage("Waiting for a connection...");
+                        TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+                        tcpClients.Add(tcpClient);
+                        updateClientsList();
+
+                        Task.Run(() => ReceiveData(tcpClient));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        AddMessage("De server is gestopt.");
+                        break;
+                    }
+                    
                 }
             }
 
             catch (SocketException ex)
             {
-                AddMessage("Port is al bezet...");
+                AddMessage("De port is al bezet.");
             }
             catch (Exception ex)
             {
-                AddMessage("Server is gestopt...");
+                AddMessage("Server is gestopt.");
             }
 
         }
@@ -204,5 +220,19 @@ namespace ChatServer
 
         }
 
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            btnStop.Visible = false;
+            btnStartStopServer.Visible = true;
+
+            // Close all connections.
+            foreach (TcpClient tcpClient in tcpClients)
+            {
+                tcpClient.Close();
+            }
+
+            // Stop the server.
+            tcpListener.Stop();
+        }
     }
 }

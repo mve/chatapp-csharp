@@ -39,6 +39,7 @@
             this.txtServerIp = new System.Windows.Forms.TextBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSendMessage = new System.Windows.Forms.Button();
+            this.btnDisconnect = new System.Windows.Forms.Button();
             this.connectToServerBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +54,7 @@
             // 
             // connectToServerBox
             // 
+            this.connectToServerBox.Controls.Add(this.btnDisconnect);
             this.connectToServerBox.Controls.Add(this.txtPort);
             this.connectToServerBox.Controls.Add(this.portLabel);
             this.connectToServerBox.Controls.Add(this.txtBufferSize);
@@ -62,7 +64,7 @@
             this.connectToServerBox.Controls.Add(this.txtServerIp);
             this.connectToServerBox.Location = new System.Drawing.Point(620, 12);
             this.connectToServerBox.Name = "connectToServerBox";
-            this.connectToServerBox.Size = new System.Drawing.Size(191, 220);
+            this.connectToServerBox.Size = new System.Drawing.Size(191, 251);
             this.connectToServerBox.TabIndex = 2;
             this.connectToServerBox.TabStop = false;
             this.connectToServerBox.Text = "Connect to Server:";
@@ -147,6 +149,16 @@
             this.btnSendMessage.UseVisualStyleBackColor = true;
             this.btnSendMessage.Click += new System.EventHandler(this.btnSendMessage_Click);
             // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.Location = new System.Drawing.Point(0, 220);
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(185, 23);
+            this.btnDisconnect.TabIndex = 7;
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.UseVisualStyleBackColor = true;
+            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -178,5 +190,6 @@
         private Label bufferSizeLabel;
         private TextBox txtPort;
         private Label portLabel;
+        private Button btnDisconnect;
     }
 }

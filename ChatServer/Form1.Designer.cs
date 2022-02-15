@@ -44,6 +44,7 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.chatsBox = new System.Windows.Forms.GroupBox();
             this.chatsList = new System.Windows.Forms.ListBox();
+            this.btnStop = new System.Windows.Forms.Button();
             this.serverSettingsBox.SuspendLayout();
             this.clientsBox.SuspendLayout();
             this.sendMessageBox.SuspendLayout();
@@ -52,6 +53,7 @@
             // 
             // serverSettingsBox
             // 
+            this.serverSettingsBox.Controls.Add(this.btnStop);
             this.serverSettingsBox.Controls.Add(this.btnStartStopServer);
             this.serverSettingsBox.Controls.Add(this.txtBufferSize);
             this.serverSettingsBox.Controls.Add(this.nameLabel);
@@ -61,16 +63,16 @@
             this.serverSettingsBox.Controls.Add(this.bufferSizeLabel);
             this.serverSettingsBox.Location = new System.Drawing.Point(12, 12);
             this.serverSettingsBox.Name = "serverSettingsBox";
-            this.serverSettingsBox.Size = new System.Drawing.Size(243, 242);
+            this.serverSettingsBox.Size = new System.Drawing.Size(243, 253);
             this.serverSettingsBox.TabIndex = 0;
             this.serverSettingsBox.TabStop = false;
             this.serverSettingsBox.Text = "Server Settings";
             // 
             // btnStartStopServer
             // 
-            this.btnStartStopServer.Location = new System.Drawing.Point(5, 199);
+            this.btnStartStopServer.Location = new System.Drawing.Point(4, 174);
             this.btnStartStopServer.Name = "btnStartStopServer";
-            this.btnStartStopServer.Size = new System.Drawing.Size(227, 37);
+            this.btnStartStopServer.Size = new System.Drawing.Size(227, 32);
             this.btnStartStopServer.TabIndex = 1;
             this.btnStartStopServer.Text = "Start";
             this.btnStartStopServer.UseVisualStyleBackColor = true;
@@ -78,7 +80,7 @@
             // 
             // txtBufferSize
             // 
-            this.txtBufferSize.Location = new System.Drawing.Point(5, 153);
+            this.txtBufferSize.Location = new System.Drawing.Point(5, 145);
             this.txtBufferSize.Name = "txtBufferSize";
             this.txtBufferSize.Size = new System.Drawing.Size(227, 23);
             this.txtBufferSize.TabIndex = 6;
@@ -95,7 +97,7 @@
             // 
             // txtServerPort
             // 
-            this.txtServerPort.Location = new System.Drawing.Point(5, 95);
+            this.txtServerPort.Location = new System.Drawing.Point(5, 91);
             this.txtServerPort.Name = "txtServerPort";
             this.txtServerPort.Size = new System.Drawing.Size(227, 23);
             this.txtServerPort.TabIndex = 5;
@@ -104,7 +106,7 @@
             // portLabel
             // 
             this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(7, 77);
+            this.portLabel.Location = new System.Drawing.Point(7, 73);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(29, 15);
             this.portLabel.TabIndex = 2;
@@ -120,7 +122,7 @@
             // bufferSizeLabel
             // 
             this.bufferSizeLabel.AutoSize = true;
-            this.bufferSizeLabel.Location = new System.Drawing.Point(7, 135);
+            this.bufferSizeLabel.Location = new System.Drawing.Point(7, 127);
             this.bufferSizeLabel.Name = "bufferSizeLabel";
             this.bufferSizeLabel.Size = new System.Drawing.Size(62, 15);
             this.bufferSizeLabel.TabIndex = 3;
@@ -202,6 +204,16 @@
             this.chatsList.Size = new System.Drawing.Size(517, 319);
             this.chatsList.TabIndex = 0;
             // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(7, 212);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(224, 35);
+            this.btnStop.TabIndex = 7;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -241,5 +253,6 @@
         private TextBox txtMessage;
         private GroupBox chatsBox;
         private ListBox chatsList;
+        private Button btnStop;
     }
 }
