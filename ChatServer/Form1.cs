@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 
@@ -38,7 +39,8 @@ namespace ChatServer
                     int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
                     message += Encoding.ASCII.GetString(buffer, 0, readBytes);
 
-                    while (networkStream.DataAvailable) {
+                    while (networkStream.DataAvailable)
+                    {
                         readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
                         message += Encoding.ASCII.GetString(buffer, 0, readBytes);
                     }
@@ -75,7 +77,8 @@ namespace ChatServer
             StartServer();
         }
 
-        private void setBufferSize() {
+        private void setBufferSize()
+        {
 
             bool result = int.TryParse(txtBufferSize.Text, out bufferSize);
             if (result)
@@ -109,19 +112,31 @@ namespace ChatServer
             setBufferSize();
             setPort();
 
-            TcpListener tcpListener = new TcpListener(IPAddress.Any, port);
-
-            // TODO Deze mag maar 1 keer worden uitgevoerd.
-            tcpListener.Start();
-
-            while (true)
+            try
             {
-                AddMessage("Waiting for a connection...");
-                TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
-                tcpClients.Add(tcpClient);
-                updateClientsList();
+                TcpListener tcpListener = new TcpListener(IPAddress.Any, port);
 
-                Task.Run(() => ReceiveData(tcpClient));
+                // TODO Deze mag maar 1 keer worden uitgevoerd.
+                tcpListener.Start();
+
+                while (true)
+                {
+                    AddMessage("Waiting for a connection...");
+                    TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+                    tcpClients.Add(tcpClient);
+                    updateClientsList();
+
+                    Task.Run(() => ReceiveData(tcpClient));
+                }
+            }
+
+            catch (SocketException ex)
+            {
+                AddMessage("Port is al bezet...");
+            }
+            catch (Exception ex)
+            {
+                AddMessage("Server is gestopt...");
             }
 
         }
@@ -165,7 +180,8 @@ namespace ChatServer
             txtMessage.Focus();
         }
 
-        async Task sendMessageToClients(string message, TcpClient clientException = null) {
+        async Task sendMessageToClients(string message, TcpClient clientException = null)
+        {
             byte[] buffer = Encoding.ASCII.GetBytes(message);
 
             foreach (TcpClient tcpClient in tcpClients)
@@ -176,7 +192,7 @@ namespace ChatServer
                     // Dont send to sender or not connected client.
                     continue;
                 }
-                
+
                 NetworkStream networkStream = tcpClient.GetStream();
 
                 if (networkStream.CanRead)
