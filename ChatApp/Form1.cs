@@ -59,7 +59,7 @@ namespace ChatApp
         /// <returns></returns>
         private async Task ReceiveData()
         {
-            string message = "";
+            StringBuilder message = new();
             byte[] buffer = new byte[bufferSize];
 
             networkStream = tcpClient.GetStream();
@@ -75,20 +75,20 @@ namespace ChatApp
                 while (true)
                 {
                     int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
-                    message = Encoding.ASCII.GetString(buffer, 0, readBytes);
+                    message.Append(Encoding.ASCII.GetString(buffer, 0, readBytes));
 
                     while (networkStream.DataAvailable)
                     {
                         readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
-                        message += Encoding.ASCII.GetString(buffer, 0, readBytes);
+                        message.Append(Encoding.ASCII.GetString(buffer, 0, readBytes));
                     }
 
-                    if (message == "")
+                    if (message.ToString() == "")
                         break;
 
-                    AddMessage(message);
+                    AddMessage(message.ToString());
                     // Clear message.
-                    message = "";
+                    message = new();
                 }
 
                 disconnectFromServer();

@@ -27,7 +27,7 @@ namespace ChatServer
 
         private async void ReceiveData(TcpClient currentClient)
         {
-            string message = "";
+            StringBuilder message = new();
             byte[] buffer = new byte[bufferSize];
 
             NetworkStream networkStream = currentClient.GetStream();
@@ -39,22 +39,22 @@ namespace ChatServer
                 while (true)
                 {
                     int readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
-                    message += Encoding.ASCII.GetString(buffer, 0, readBytes);
+                    message.Append(Encoding.ASCII.GetString(buffer, 0, readBytes));
 
                     while (networkStream.DataAvailable)
                     {
                         readBytes = await networkStream.ReadAsync(buffer, 0, bufferSize);
-                        message += Encoding.ASCII.GetString(buffer, 0, readBytes);
+                        message.Append(Encoding.ASCII.GetString(buffer, 0, readBytes));
                     }
 
-                    if (message == "")
+                    if (message.ToString() == "")
                         break;
 
-                    AddMessage(message);
-                    sendMessageToClients(message, currentClient);
+                    AddMessage(message.ToString());
+                    sendMessageToClients(message.ToString(), currentClient);
 
                     // Clear message.
-                    message = "";
+                    message = new();
                 }
 
                 // Verstuur een reactie naar de client (afsluitend bericht)
