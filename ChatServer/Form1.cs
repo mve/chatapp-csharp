@@ -59,7 +59,7 @@ namespace ChatServer
 
                 // Verstuur een reactie naar de client (afsluitend bericht)
                 buffer = Encoding.ASCII.GetBytes("bye");
-                networkStream.Write(buffer, 0, buffer.Length);
+                await networkStream.WriteAsync(buffer, 0, buffer.Length);
 
                 // cleanup:
                 // networkStream.Close();
@@ -83,12 +83,30 @@ namespace ChatServer
         {
 
             bool result = int.TryParse(txtBufferSize.Text, out bufferSize);
+
             if (result)
             {
-                AddMessage("Set buffer size to " + bufferSize + ".");
+
+                if (bufferSize > 0 && bufferSize < 32768)
+                {
+
+                    AddMessage("Set buffer size to " + bufferSize + ".");
+
+                }
+                else
+                {
+                    bufferSize = 1024;
+                    txtBufferSize.Text = bufferSize.ToString();
+                    AddMessage("Incorrect value for buffer size. Set to 1024.");
+                }
+
+
+
             }
             else
             {
+                bufferSize = 1024;
+                txtBufferSize.Text = bufferSize.ToString();
                 AddMessage("Incorrect value for buffer size. Set to 1024.");
             }
 
@@ -100,11 +118,24 @@ namespace ChatServer
             bool result = int.TryParse(txtServerPort.Text, out port);
             if (result)
             {
-                AddMessage("Set port to " + port + ".");
+
+                if (port > 0 && port < 32768)
+                {
+                    AddMessage("Set port to " + port + ".");
+                }
+                else
+                {
+                    port = 9000;
+                    txtServerPort.Text = port.ToString();
+                    AddMessage("Incorrect value for port. Set to 9000.");
+                }
+
             }
             else
             {
-                AddMessage("Incorrect value for buffer size. Set to 9000.");
+                port = 9000;
+                txtServerPort.Text = port.ToString();
+                AddMessage("Incorrect value for port. Set to 9000.");
             }
 
         }
@@ -139,19 +170,22 @@ namespace ChatServer
                     }
                     catch (Exception ex)
                     {
+                        stopServer();
                         AddMessage("De server is gestopt.");
                         break;
                     }
-                    
+
                 }
             }
 
             catch (SocketException ex)
             {
+                stopServer();
                 AddMessage("De port is al bezet.");
             }
             catch (Exception ex)
             {
+                stopServer();
                 AddMessage("Server is gestopt.");
             }
 
@@ -220,8 +254,9 @@ namespace ChatServer
 
         }
 
-        private void btnStop_Click(object sender, EventArgs e)
+        private void stopServer()
         {
+
             btnStop.Visible = false;
             btnStartStopServer.Visible = true;
 
@@ -231,8 +266,16 @@ namespace ChatServer
                 tcpClient.Close();
             }
 
+            updateClientsList();
+
             // Stop the server.
             tcpListener.Stop();
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            stopServer();
         }
     }
 }

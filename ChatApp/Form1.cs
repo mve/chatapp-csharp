@@ -17,13 +17,19 @@ namespace ChatApp
 
         protected delegate void UpdateDisplayDelegate(string message);
 
+        /// <summary>
+        /// Init component and hide disconnect button.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
             btnDisconnect.Visible = false;
         }
 
-        // Stap 5:
+        /// <summary>
+        /// Add a message to the chat list.
+        /// </summary>
+        /// <param name="message"></param>
         private void AddMessage(string message)
         {
             if (listChat.InvokeRequired)
@@ -38,11 +44,19 @@ namespace ChatApp
             }
         }
 
+        /// <summary>
+        /// Add a message to the chat list.
+        /// </summary>
+        /// <param name="message"></param>
         private void UpdateDisplay(string message)
         {
             listChat.Items.Add(message);
         }
 
+        /// <summary>
+        /// Read data from the networkstream.
+        /// </summary>
+        /// <returns></returns>
         private async Task ReceiveData()
         {
             string message = "";
@@ -89,7 +103,11 @@ namespace ChatApp
             AddMessage("Connection closed");
         }
 
-        // Stap 8:
+        /// <summary>
+        /// Set the buffersize, port and host. Connect to the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             AddMessage("Connecting...");
@@ -112,40 +130,93 @@ namespace ChatApp
 
         }
 
+        /// <summary>
+        /// Set the buffersize.
+        /// </summary>
         private void setBufferSize()
         {
             bool result = int.TryParse(txtBufferSize.Text, out bufferSize);
+
             if (result)
             {
-                AddMessage("Set buffer size to " + bufferSize + ".");
+
+                if (bufferSize > 0 && bufferSize < 32768)
+                {
+
+                    AddMessage("Set buffer size to " + bufferSize + ".");
+
+                }
+                else
+                {
+                    bufferSize = 1024;
+                    txtBufferSize.Text = bufferSize.ToString();
+                    AddMessage("Incorrect value for buffer size. Set to 1024.");
+                }
+
+
+
             }
             else
             {
+                bufferSize = 1024;
+                txtBufferSize.Text = bufferSize.ToString();
                 AddMessage("Incorrect value for buffer size. Set to 1024.");
             }
 
         }
 
+        /// <summary>
+        /// Set the port.
+        /// </summary>
         private void setPort()
         {
             bool result = int.TryParse(txtPort.Text, out port);
             if (result)
             {
-                AddMessage("Set port size to " + port + ".");
+
+                if (port > 0 && port < 32768)
+                {
+                    AddMessage("Set port to " + port + ".");
+                }
+                else
+                {
+                    port = 9000;
+                    txtPort.Text = port.ToString();
+                    AddMessage("Incorrect value for port. Set to 9000.");
+                }
+
             }
             else
             {
-                AddMessage("Incorrect value for buffer size. Set to 9000.");
+                port = 9000;
+                txtPort.Text = port.ToString();
+                AddMessage("Incorrect value for port. Set to 9000.");
             }
 
         }
 
+        /// <summary>
+        /// Set the host.
+        /// </summary>
         private void setHost()
         {
+
+            if (txtServerIp.Text == "")
+            {
+                host = "localhost";
+                txtServerIp.Text = host;
+                AddMessage("Incorrect value for host. Set to localhost.");
+                return;
+            }
+
             host = txtServerIp.Text;
         }
 
-        // Stap 9:
+        /// <summary>
+        /// Send a message to the server if connected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btnSendMessage_Click(object sender, EventArgs e)
         {
 
@@ -178,6 +249,9 @@ namespace ChatApp
 
         }
 
+        /// <summary>
+        ///  Disconnect the client from the server.
+        /// </summary>
         private void disconnectFromServer()
         {
             // cleanup:
@@ -194,6 +268,11 @@ namespace ChatApp
 
         }
 
+        /// <summary>
+        /// Button for disconnecting from the server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
             disconnectFromServer();
